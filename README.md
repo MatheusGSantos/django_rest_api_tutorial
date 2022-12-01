@@ -53,7 +53,7 @@ and set the password to `password123`.
 
 Serializers are classes that allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. Django models are too complex for for databases to handle and that's why we need serializers!
 
-Let's start by creating a `serializers.py` inside `tutorial/quickstart/` (our app folder) and write the following code in it:
+Let's start by creating a `serializers.py` inside `tutorial/quickstart/` (our app folder) and writing the following code in it:
 
 ```py
 """
