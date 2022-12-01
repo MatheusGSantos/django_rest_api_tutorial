@@ -19,7 +19,7 @@ then
 
 `conda activate <name you gave>`
 
-To make the process easier, I made a setup file, so you just need to copy it and type the following command on the command line (from the root directory):
+To make the process easier, I made a setup file, so you just need to copy it and type the following command in the command line (from the root directory):
 
 `pip install .`
 
