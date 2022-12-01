@@ -37,7 +37,7 @@ to create a new project named tutorial in the root folder (where we are right no
 
 to create a new app named quickstart. This makes a new app folder where we have our models, views, serializers, etc. It's created within the project's directory to avoid name clashes with external modules by using the project's namespace.
 
-Because we haven't touched the `settings.py` file, we'll be using sqlite to manage our models and data. Now we need to sync our database for the first time by running:
+Because we haven't touched the `settings.py` file, we'll be using sqlite to store our models and data. Now we need to sync our database for the first time by running:
 
 `python manage.py migrate`
 
