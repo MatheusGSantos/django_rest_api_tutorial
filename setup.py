@@ -8,5 +8,5 @@ setup(
     author_email="",
     url="https://github.com/MatheusGSantos/django_rest_api_tutorial",
     packages=[],
-    install_requires=["Django", "pylint", "autopep8", "djangorestframework"],
+    install_requires=["Django", "pylint", "djangorestframework"],
 )
