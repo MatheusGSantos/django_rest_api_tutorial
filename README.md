@@ -11,7 +11,7 @@ This project is simply the outcome of following the [quickstart section](https:/
 ## Setting up the environment
 
 I'd recommend using some kind of virtual environment like venv or conda env to isolate your dependencies from other project or global environments and avoid module conflicts overall.
-In my case, I used a fresh conda environment. To setup a new conda env you first need [Anaconda](https://www.anaconda.com/) installed and then type the following command on the command line:
+In my case, I used a fresh conda environment. To setup a new conda env you first need [Anaconda](https://www.anaconda.com/) installed and then type the following command in the command line:
 
 `conda create --name <give it a name>`
 
