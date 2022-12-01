@@ -74,4 +74,4 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 ```
 
-Our serializer classes inherit from `HyperlinkedModelSerializer` because our models use hyperlinks as unique identifiers. In the inner class `Meta` we define the model and the model's fields to be serialized and deserialized. If we wanted all fields, we could pass `'__all__'` to the fields variable.
+Our serializer classes inherit from `HyperlinkedModelSerializer` because our models use hyperlinks as identifiers. In the inner class `Meta` we define the model and the model's fields to be serialized and deserialized. If we wanted all fields, we could pass `'__all__'` to the fields variable.
