@@ -75,3 +75,87 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 ```
 
 Our serializer classes inherit from `HyperlinkedModelSerializer` because our models use hyperlinks as identifiers. In the inner class `Meta` we define the model and the model's fields to be serialized and deserialized. If we wanted all fields, we could pass `'__all__'` to the fields variable.
+
+## Creating Views
+
+Views are functions or classes (evolution of the old-style views) that take web requests and return web responses. It can have some logic inside, like formatting templates or querying some data before sending it as a response. As class-based views we can define some methods to match the HTTP methods and we can also use **Viewsets**. Viewsets group all the common View behaviour into this one "package" class, so that when we inherit from it we get a lot of pre-built methods adapted to our specific case with only a few extra config within it.
+
+Inside our `tutorial/quickstart/views.py` we have the following code:
+
+```py
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from rest_framework import permissions
+from tutorial.quickstart.serializers import UserSerializer, GroupSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+```
+
+This defines two viewsets: a **user** viewset that uses all the User table odered by date_joined for database queries, uses the UserSerializer and needs authentication; a **group** viewset that uses all the Group table for database queries, uses the GroupSerializer and needs authentication.
+
+## Setting up the URLs
+
+Inside the `tutorial/urls.py`, we have this:
+
+```py
+from django.urls import include, path
+from rest_framework import routers
+from tutorial.quickstart import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+urlpatterns = [
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+]
+```
+
+Here we are creating a router and registering the view methods to their respective paths. After that we define the urlpatterns array. By using the include method, we can assign the router urls easily and end up with something like `http://base_url/users` for the user viewset and `http://base_url/groups` for the group viewset. Also including login and logout views for or use with the browsable API (useful if your API requires authentication and you want to use the browsable API).
+
+## Enabling pagination and adding `rest_framework` to the installed apps
+
+Pagination allows you to control how many objects per page are returned. We simply need to add the following code to the `tutorial/settings.py`:
+
+```py
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+```
+
+In the same file, we need to add `rest_framework` to `INSTALLED_APPS`:
+
+```py
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+]
+```
+
+## Testing the app
+
+To run a development server we type `python manage.py runserver` in the command line. Now we can access "http://localhost:8000/" on our browser and go to one of the set urls like "http://127.0.0.1:8000/users/" (Make sure to login first).
+
+## Considerations
+
+This project does not resemble by any means a real world project or a commercial software, but serves well it's pourpose. After this, I intend to dive deeper into the framework and build more complex projects.
